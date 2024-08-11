@@ -2,8 +2,10 @@ import allure
 import faker
 from test_base.base_create_new_user import TestCreateNewUserBase
 from constants import Constants
+
 constants = Constants()
 faker = faker.Faker()
+
 
 @allure.epic('Группа тестов на создание нового пользователя')
 class TestCreateNewUser:

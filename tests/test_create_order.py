@@ -2,7 +2,7 @@ import allure
 from test_base.base_create_order import BaseCreateOrder
 
 
-@allure.epic('Тесты на создание заказа')
+@allure.epic('Группа тестов на создание заказа')
 class TestCreateOrder:
     @allure.title('Тест создать заказ без авторизации, проверяем код ответа и текст ответа ')
     def test_create_order_authorization_false(self):
