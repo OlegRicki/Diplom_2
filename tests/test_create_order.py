@@ -1,5 +1,6 @@
 import allure
 from test_base.base_create_order import BaseCreateOrder
+from conftest import create_new_test_user
 
 
 @allure.epic('Группа тестов на создание заказа')
@@ -19,7 +20,8 @@ class TestCreateOrder:
         response = response.json()
         assert base_create_order.check_success_order(response=response)
 
-    def test_create_order_authorization_true(self):
+    @allure.title('Тест создать заказ c авторизациtq, проверяем код ответа и текст ответа ')
+    def test_create_order_authorization_true(self, create_new_test_user):
         base_create_order = BaseCreateOrder()
         ingredients = base_create_order.get_data_ingredients()
         bun = base_create_order.get_id_ingredient_from_ingredients_by_name(
@@ -28,7 +30,9 @@ class TestCreateOrder:
             ingredients, name_ingredient='Соус Spicy-x')
         main = base_create_order.get_id_ingredient_from_ingredients_by_name(
             ingredients, name_ingredient='Мясо бессмертных моллюсков Protostomia')
-        response = base_create_order.create_order_authorization_user(bun, sauce, main)
+        access_token = create_new_test_user.json().get('accessToken')
+
+        response = base_create_order.create_order_authorization_user(bun, sauce, main, access_token=access_token)
         assert response.status_code == 200
         response = response.json()
         assert base_create_order.check_success_order(response=response)

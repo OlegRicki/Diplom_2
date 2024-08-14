@@ -44,12 +44,13 @@ class BaseCreateOrder:
             return False
 
     @allure.step('Отправить запрос на создание заказа с авторизацией пользователя')
-    def create_order_authorization_user(self, bun, sauce, main):
+    def create_order_authorization_user(self, bun, sauce, main, access_token):
         url = constants.BASE_API_URL + 'orders'
         headers = {
-            'authorization': f'Token {constants.AUTH_TOKEN}',
-            'Content-Type': 'application/json'}
+            "Content-Type": "application/json",
+            "Authorization": f"{access_token}"
+        }
         json = {'ingredients': [bun, sauce, main]}
-        response = requests.post(url, data=json)
+        response = requests.post(url, json=json, headers=headers)
         return response
 
