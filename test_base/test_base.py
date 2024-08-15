@@ -1,11 +1,12 @@
+import allure
 import requests
 from constants import Constants
 
 constants = Constants()
 
 
-class TestBase:
-
+class BaseTest:
+    @allure.step('Удалить юзера')
     def delete_user(self, access_token: str):
         url = constants.BASE_API_URL + 'auth/user'
 

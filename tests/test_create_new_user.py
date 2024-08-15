@@ -2,10 +2,9 @@ import allure
 import faker
 import pytest
 
-from test_base.base_create_new_user import TestCreateNewUserBase
+from test_base.base_create_new_user import CreateNewUserBase
 from constants import Constants
 
-constants = Constants()
 faker = faker.Faker()
 
 
@@ -14,10 +13,10 @@ class TestCreateNewUser:
     @allure.title('Тест на создание нового пользователя, проверяем код ответа')
     @pytest.mark.usefixtures("delete_test_user")
     def test_create_new_user(self, delete_test_user):
-        email = constants.TEST_EMAIL
-        password = constants.TEST_EMAIL
-        user_name = constants.TEST_NAME
-        base_create_new_user = TestCreateNewUserBase()
+        email = Constants.TEST_EMAIL
+        password = Constants.TEST_EMAIL
+        user_name = Constants.TEST_NAME
+        base_create_new_user = CreateNewUserBase()
         response = base_create_new_user.create_new_user(username=user_name, email=email, password=password)
         assert response.status_code == 200
         delete_test_user['token'] = response.json()['accessToken']
@@ -26,9 +25,9 @@ class TestCreateNewUser:
     @allure.title('Негативный тест на создание пользователя используя уже использованные данные,'
                   ' проверяем код ответа и текст ответа')
     def test_fail_create_new_user_ith_data_used(self, create_new_test_user):
-        base_create_new_user = TestCreateNewUserBase()
+        base_create_new_user = CreateNewUserBase()
         response = base_create_new_user.create_new_user(
-            username=constants.TEST_NAME, email=constants.TEST_EMAIL, password=constants.TEST_PASSWORD)
+            username=Constants.TEST_NAME, email=Constants.TEST_EMAIL, password=Constants.TEST_PASSWORD)
         assert response.status_code == 403
         assert response.json() == {'success': False, 'message': 'User already exists'}
 
@@ -38,7 +37,7 @@ class TestCreateNewUser:
         password = ''
         user_name = ''
 
-        base_create_new_user = TestCreateNewUserBase()
+        base_create_new_user = CreateNewUserBase()
         response = base_create_new_user.create_new_user(
             username=user_name, email=email, password=password)
         assert response.status_code == 403

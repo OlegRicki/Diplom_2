@@ -5,7 +5,7 @@ from constants import Constants
 constants = Constants()
 
 
-class TestBaseLogin:
+class BaseLogin:
     @allure.step('Отправить запрос на авторизацию пользователя')
     def login(self, login: str, password: str):
         url = constants.BASE_API_URL + 'auth/login'

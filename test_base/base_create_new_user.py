@@ -8,7 +8,7 @@ from constants import Constants
 constants = Constants()
 
 
-class TestCreateNewUserBase:
+class CreateNewUserBase:
     @allure.step('Отправить запрос на создание пользователя')
     def create_new_user(self, username: str, email: str, password: str):
         url = constants.BASE_API_URL + 'auth/register'
