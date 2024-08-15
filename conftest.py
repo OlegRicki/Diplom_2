@@ -1,11 +1,12 @@
 import pytest
 
 from test_base.base_create_new_user import CreateNewUserBase
-from tests.test_create_new_user import faker
+import faker
 from test_base.test_base import BaseTest
 from constants import Constants
 
 constants = Constants()
+faker = faker.Faker()
 
 
 @pytest.fixture(scope='function')

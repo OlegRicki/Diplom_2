@@ -1,6 +1,7 @@
 import allure
 from test_base.base_create_order import BaseCreateOrder
 from conftest import create_new_test_user
+from expected_response import FAIL_CREATE_ORDER_NON_INGREDIENTS
 
 
 @allure.epic('Группа тестов на создание заказа')
@@ -42,7 +43,7 @@ class TestCreateOrder:
         base_create_order = BaseCreateOrder()
         response = base_create_order.create_order_no_ingredients()
         assert response.status_code == 400
-        assert response.json() == {'success': False, 'message': "Ingredient ids must be provided"}
+        assert response.json() == FAIL_CREATE_ORDER_NON_INGREDIENTS
 
     @allure.title('Негативный тест на создание заказа с невалидным хэшем, проверяем код ответа')
     def test_fail_create_order_invalid_hash(self):

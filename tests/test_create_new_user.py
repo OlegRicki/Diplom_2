@@ -1,11 +1,10 @@
 import allure
-import faker
 import pytest
 
 from test_base.base_create_new_user import CreateNewUserBase
 from constants import Constants
+from expected_response import CREATE_NEW_USER_RESPONSE, FAIL_CREATE_NEW_USER_RESPONSE
 
-faker = faker.Faker()
 
 
 @allure.epic('Группа тестов на создание нового пользователя')
@@ -29,7 +28,7 @@ class TestCreateNewUser:
         response = base_create_new_user.create_new_user(
             username=Constants.TEST_NAME, email=Constants.TEST_EMAIL, password=Constants.TEST_PASSWORD)
         assert response.status_code == 403
-        assert response.json() == {'success': False, 'message': 'User already exists'}
+        assert response.json() == CREATE_NEW_USER_RESPONSE
 
     @allure.title('Негативный тест на создание пользователя, без обязательных полей')
     def test_fail_create_new_user_non_field(self):
@@ -41,4 +40,4 @@ class TestCreateNewUser:
         response = base_create_new_user.create_new_user(
             username=user_name, email=email, password=password)
         assert response.status_code == 403
-        assert response.json() == {'message': 'Email, password and name are required fields', 'success': False}
+        assert response.json() == FAIL_CREATE_NEW_USER_RESPONSE
